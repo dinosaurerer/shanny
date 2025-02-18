@@ -68,71 +68,80 @@ yesButton.addEventListener("click", function() {
     const style = document.createElement("style");
     style.innerHTML = `
         body {
+            background-color: #f1d5da; /* 浅粉色 */
+            text-align: center;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            overflow: hidden;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
         }
+
+        /* Yes 完全填满屏幕 */
         .yes-screen {
-            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffdae0; /* 粉色 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
+
+        /* 文字 */
         .yes-text {
             font-size: 3rem;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: #68495b; /* 和 h1 颜色一致 */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
             animation: fadeIn 1s ease-in-out;
         }
+
+        /* 拥抱图片 */
         .hug-image {
             width: 200px;
             height: auto;
-            animation:
-                hugFadeIn 1s ease-out,
-                hugFadeOut 1s ease-out 5s forwards;
+            animation: hugFadeIn 1s ease-out;
         }
+
+        /* 合照容器 */
         .love-container {
             position: relative;
             margin-top: 20px;
         }
+
+        /* 合照图片 */
         .love-image {
             width: 300px;
             height: auto;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            animation:
-                zoomIn 1s ease-out 6s both,
-                float 3s ease-in-out 7s infinite;
+            animation: zoomIn 1s ease-out;
         }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
         @keyframes hugFadeIn {
             from { opacity: 0; transform: scale(0.5); }
             to { opacity: 1; transform: scale(1); }
         }
-        @keyframes hugFadeOut {
-            to { opacity: 0; transform: scale(0); }
-        }
+
         @keyframes zoomIn {
             from { opacity: 0; transform: scale(0.5); }
             to { opacity: 1; transform: scale(1); }
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
     `;
     document.head.appendChild(style);
 
-    // 5秒后隐藏hug图片，6秒后显示love图片
+    // 5秒后显示love图片
     setTimeout(() => {
-        const container = document.querySelector(".love-container");
+        const container = document.createElement("div");
+        container.classList.add("love-container");
         container.innerHTML = `<img src="images/love.png" alt="我们的合照" class="love-image">`;
-    }, 6000); // 比hug消失晚1秒（5秒消失 + 1秒延迟）
-});
+        document.querySelector(".yes-screen").appendChild(container);
+    }, 5000);
+    });
